@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/eat/main",
+    "pages/where/main",
+    "pages/live/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FF8000",
+    "navigationBarTitleText": "珠海旅游助手",
+    "navigationBarTextStyle": "white"
+  }
+}
