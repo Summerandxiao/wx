@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/main",
+    "pages/detailwhere/main",
     "pages/eat/main",
     "pages/where/main",
     "pages/live/main"
