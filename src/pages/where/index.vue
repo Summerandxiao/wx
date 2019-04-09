@@ -1,6 +1,6 @@
 <template>
       <div class="scroll_box">
-        <scroll-view scroll-y="true" class="poster" scroll-left="scrollLeft" style="width: auto;overflow:hidden;">
+        <view  class="poster"  style="width: auto;overflow:hidden;">
            
                 <view v-for="(item,index) in prolist"
                  id="index" 
@@ -11,13 +11,19 @@
                  <div class="title">{{item.title}}</div>
                   </view>
                
-            </scroll-view>
+            </view>
     </div>
 </template>
 
 <script>
  import store from "./store.js";
    export default{
+       data(){
+           return{
+                pageCode:1
+           }
+          
+       },
         computed:{
             prolist(){
                 return store.state.prolist
@@ -28,8 +34,29 @@
                 wx.navigateTo({
                         url: '../../pages/detailwhere/main?id=' + id+"&title="+title+"&img="+img
                     })
-            }
+            
+            },
+                   onReachBottom () {
+                    // 请求下一页数据，拼接之前的数据，重新渲染
+                    api.request('douban?count=20&start='+ this.data.pageCode * 20).then((data) => {
+                    console.log(data)
+                    let pageCode = this.data.pageCode + 1;
+                    if (data.length == 0) {
+                        wx.showToast({
+                        title: '没有数据了',
+                        duration: 2000
+                        })
+                        return;
+                    }
+                    this.$nextTick({
+                        pageCode: pageCode,
+                        prolist: [...store.state.prolist, ...data]
+                    })
+            })
+            
+          }
         },
+            
         mounted(){
              this.$http.get("https://www.daxunxun.com/douban")
                .then((data)=>{
